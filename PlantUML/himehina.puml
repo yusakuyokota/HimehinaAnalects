@@ -1,0 +1,49 @@
+@startuml HimehinaAttack
+legend top right
+HimehinaAttack
+end legend
+
+package Question
+{
+    class QuestionSelecter <<MonoBehavior>>
+    {
+        - _answerStr : string
+        - _currentDifficulty : int
+        - _prevQuestionResult : bool
+        - _questionView : QuestionView
+        + SelectQuiz(int difficulty) : void
+        + CheckCorrect(string inputAnswer) : void
+    }
+
+    class QuestionView <<MonoBehavior>>
+    {
+        - _answerText : Texthimehina.puml
+        + SetAnswerText(string) : void
+    }
+
+    class QuestionResultView <<MonoBehavior>>
+    {
+        - _resultSymbolImage : Image
+        + DisplayResultSymbol(bool result) : void
+    }
+}
+
+class GameManager <<MonoBehavior>>
+{
+    - correctCount : int
+    + FinishGame() : void
+}
+
+class PlayerController <<MonoBehavior>>
+{
+    - _inputField : InputField
+    - _questionSelecter : QuestionSelecter
+    - PlayerInputAsync() : async void
+}
+
+GameManager <-- QuestionSelecter : includes >
+QuestionSelecter <-- PlayerController : includes >
+QuestionSelecter --> QuestionView : includes <
+QuestionSelecter --> QuestionResultView : includes <
+
+@enduml
