@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class QuestionResultView : MonoBehaviour
 {
     // 〇のスプライト
+    [SerializeField]
     private Sprite _circleSymbol;
+    [SerializeField]
     // ✕のスプライト
     private Sprite _crossSymbol;
     // 記号表示イメージ
@@ -13,11 +15,17 @@ public class QuestionResultView : MonoBehaviour
     // 表示時間（ミリ秒）
     private const int _displayMilliseconds = 500;
 
+    private void Start()
+    {
+        _resultSymbolImage = GetComponent<Image>();
+        gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// 正解・不正解に応じて〇・✕を表示する関数
     /// </summary>
     /// <param name="result"<true>正解</true><false>不正解</false></param>
-    public async void DisplayResultSymbol(bool result)
+    public async UniTask DisplayResultSymbol(bool result)
     {
         // 正解
         if (result)

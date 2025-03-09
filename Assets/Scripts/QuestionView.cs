@@ -6,7 +6,7 @@ public class QuestionView : MonoBehaviour
     // 表示テキスト
     private Text _questionText;
 
-    private void Start()
+    public void Init()
     {
         _questionText = GetComponent<Text>();
     }

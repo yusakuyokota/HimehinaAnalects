@@ -3,7 +3,7 @@ using MessagePack;
 using QuestionMasterData;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class QuestionSelecter : MonoBehaviour
 {
@@ -11,12 +11,15 @@ public class QuestionSelecter : MonoBehaviour
     private MemoryDatabase _questionDatabase;
     private string _answerStr;
     private int _nowQuestionId;
-    private int _currentDifficulty;
+    private int _currentDifficulty = 1;
     private bool _preQuestionResult;
     private QuestionView _questionView;
+    [SerializeField]
     private QuestionResultView _questionResultView;
+    [SerializeField]
+    private GameManager _gameManager;
 
-    private async void Start()
+    public async UniTask InitDatabase()
     {
         var messagePackResolvers = CompositeResolver.Create(
             MasterMemoryResolver.Instance,
@@ -31,9 +34,14 @@ public class QuestionSelecter : MonoBehaviour
         var binary = asset.Result.bytes;
 
         _questionDatabase = new MemoryDatabase(binary);
+
+        _questionView = GetComponent<QuestionView>();
+        _questionView.Init();
+
+        await UniTask.Yield();
     }
 
-    public void CheckCorrect(string inputAnswer)
+    public async void CheckCorrect(string inputAnswer)
     {
         bool result = inputAnswer == _answerStr;
 
@@ -58,7 +66,10 @@ public class QuestionSelecter : MonoBehaviour
             }
         }
 
-        _questionResultView.DisplayResultSymbol(result);
+        await _questionResultView.DisplayResultSymbol(result);
+
+        SelectQuestion();
+        _gameManager.Hoge();
     }
 
     /// <summary>
