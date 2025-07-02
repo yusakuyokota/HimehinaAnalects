@@ -41,7 +41,7 @@ public class QuestionSelecter : MonoBehaviour
         await UniTask.Yield();
     }
 
-    public async void CheckCorrect(string inputAnswer)
+    public async UniTask CheckCorrect(string inputAnswer)
     {
         bool result = inputAnswer == _answerStr;
 

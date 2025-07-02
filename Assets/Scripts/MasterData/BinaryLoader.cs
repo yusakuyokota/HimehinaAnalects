@@ -9,6 +9,7 @@ using UnityEngine.AddressableAssets;
 
 public class BinaryLoader : MonoBehaviour
 {
+#if UNITY_EDITOR
     [MenuItem("Tools/Master/Load Binary")]
     private static async void Run()
     {
@@ -44,4 +45,5 @@ public class BinaryLoader : MonoBehaviour
             File.WriteAllText(table.TableName + ".csv", sb.ToString(), new UTF8Encoding(false));
         }
     }
+#endif
 }

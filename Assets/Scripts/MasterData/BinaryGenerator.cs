@@ -8,6 +8,7 @@ using UnityEngine.AddressableAssets;
 
 public static class BinaryGenerator
 {
+#if UNITY_EDITOR
     [MenuItem("Tools/Master/Generate Binary")]
     private static async void Run()
     {
@@ -36,4 +37,5 @@ public static class BinaryGenerator
         File.WriteAllBytes(path, binary);
         AssetDatabase.Refresh();
     }
+#endif
 }
